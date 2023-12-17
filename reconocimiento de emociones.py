@@ -45,8 +45,14 @@ while True:
             img_emocion = cv2.resize(img_emocion, (0, 0), None, 0.25, 0.25)
             ani, ali, c = img_emocion.shape
 
+            # Obtener región de interés para la emoción
+            roi = frame[10:10 + img_emocion.shape[0], 10:10 + img_emocion.shape[1]]
+
+            # Combinar imagen de emoción con el fondo de la cámara
+            img_emocion = cv2.addWeighted(roi, 1, img_emocion, 0.7, 0)
+
             # Superponemos la imagen en la esquina superior izquierda de frame
-            frame[10:ani + 10, 10:ali + 10] = img_emocion
+            frame[10:10 + img_emocion.shape[0], 10:10 + img_emocion.shape[1]] = img_emocion
         else:
             print("Error: La imagen de la emoción no tiene dimensiones válidas.")
 
